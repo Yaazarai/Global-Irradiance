@@ -1,6 +1,9 @@
 # Global-Irradiance
 A better method for 2D based global illumination.
 
+----
+
+## PART ONE: REWORKING NOISE
 The most common issue with 2D Global Illumination--which uses a method called radiosity--is two fold: performance & noisey. The poor performance is a direct result of naive random sampling frame-by-frame, producing a noisey result. Using naive random sampling without frame-by-frame consideration requires you to increase the number of ray samples or the number of temporal frames. The former reduces performance and the later makes things blurry--neither is fun to look at for gaming. A major recommendation is to seed the golden ratio into your blue noise, because it maintains uniformity and makes the noise more blue over-time. While this may work for 3D applications and certain graphics affects, for 2D global illumination this method is very undesirable. In order to achieve production ready visually fidelity we have to take into account how noise affects our lighting on a frame-by-frame basis--since the previous frame feeds into the next frame with 2D global illumination.
 
 Let's look at the some examples of why this doesn't work for 2D. On the left blue-noise using rotation (convert the noise to radians, add an offset, convert back to normal space) and on the right blue noise with seeded golden ratio. This is 16 rays per pixel + 2 frames (current and previous)  of temporal filtering.

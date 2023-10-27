@@ -4,6 +4,42 @@ A better method for 2D based global illumination. Built with GameMaker Studio 2 
 <p align="center">
   <img src="https://github.com/Yaazarai/Global-Irradiance/assets/7478702/5169b042-0485-4008-9061-cab933e1ab74" />
 </p>
+
+----
+
+## USING GLOBAL IRRADIANCE
+
+Global irradiance provides 3 helper functions for occluders, emitters and refraction: `draw_sprite_occluder / emitter / refraction` and `draw_surface_occluder / emitter / refraction`.
+
+The `Obj_GlobalIrradiance` is a test object which implements the system and provides three surfaces that you must draw your scene to using the functions above: `gameworld_occluders`, `gameworld_worldscene` and `gameworld_refraction`.
+
+1. `gameworld_occluders` must contain all occluders in your scene. Draw your occluders in BLACK so that they only cast shadows, draw them in COLOR/WHITE if you want them to be visible.
+2. `gameworld_worldscene` must have the previous surface drawn in BLACK (removing all color) and then have all emitters drawn to it.
+3. `gameworld_refraction` must contain all occluders in your scene that will be visible have their refraction properties rendered here.
+
+In the provided test object the scene is all drawn in the `Draw Begin` event. Here is that example:
+```GML
+surface_set_target(gameworld_occluders);
+draw_clear_alpha(c_black, 0);
+	draw_sprite_occluder(Spr_WallScene, 0, 0, 0, 1, 1, 0);
+	draw_sprite_occluder(Spr_Occluder, 0, mouse_x, mouse_y, 1, 1, global.irr_frametime / 30.0);
+surface_reset_target();
+
+
+surface_set_target(gameworld_worldscene);
+draw_clear_alpha(c_black, 0);
+	draw_surface_emitter(gameworld_occluders, 0, 0, 1, 1, 0, c_black); // Brightness is taken from the color of the emnitter, brighter colors have brighter light.
+	draw_sprite_emitter(Spr_EmitterScene, 0, 0, 0, 1, 1, 0, c_white); // Brightness is taken from the color of the emnitter, brighter colors have brighter light.
+surface_reset_target();
+
+surface_set_target(gameworld_refraction);
+draw_clear_alpha(c_black, 0);
+	draw_ambient_refraction(1.0);
+	draw_sprite_refraction(0.0 /*visibility*/, 0.0 /*occlusion*/, Spr_WallScene, 0, 0, 0, 1, 1, 0);
+	draw_sprite_refraction(1.0 /*visibility*/, 0.0 /*occlusion*/, Spr_Occluder, 0, mouse_x, mouse_y, 1, 1, global.irr_frametime / 30.0);
+surface_reset_target();
+```
+
 ----
 
 ## PART ONE: REWORKING NOISE

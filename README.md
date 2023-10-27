@@ -1,7 +1,7 @@
 # Global-Irradiance
-A better method for 2D based global illumination.
+A better method for 2D based global illumination. Built with GameMaker Studio 2 (v2023.6.0.92).
 
-![sample](https://i.imgur.com/0Mw16jG.gif)
+![Sample](https://i.imgur.com/0Mw16jG.gif)
 
 ----
 

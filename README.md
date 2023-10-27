@@ -9,9 +9,24 @@ A better method for 2D based global illumination. Built with GameMaker Studio 2 
 
 ## USING GLOBAL IRRADIANCE
 
-Global irradiance provides 3 helper functions for occluders, emitters and refraction: `draw_sprite_occluder / emitter / refraction` and `draw_surface_occluder / emitter / refraction`.
+This is a WORLD SPACE effect, not a view space effect. Where your world begins/ends so should the surfaces used for this shader setup. This is because when lights of out of view, they will still be rendered and have an effect on the part of the scene that you can still see. Due to this the surfaces provided are SQUARE surfaces and should ALWAYS be square or will not work, this is both a warning and a requirement for fidelity and efficiency.
 
-The `Obj_GlobalIrradiance` is a test object which implements the system and provides three surfaces that you must draw your scene to using the functions above: `gameworld_occluders`, `gameworld_worldscene` and `gameworld_refraction`.
+The Obj_GlobalIrradiance is a test object which implements the system and has two eventsthat you manage, the create event and draw begin event. The create event allws you to enable/disable temporal filtering, adjust the level of temporal filtering, enable/disable gaussian blur and smart denoising along with the graphics settings for global illumination:
+```GML
+/// LIGHTING SETTINGS:
+global.irr_resolution = 512.0; // The square pixel resolution of the lighting--up to 128, 256, 512, 1024, 2048 (max).
+global.irr_raysperpixel = 32.0; // How many rays each pixel can cast.
+global.irr_stepsperray = 32.0; // How many steps a ray can take before giving up on finding light.
+
+global.irr_usedebuginterface = true; // for testing only.
+global.irr_usetimeoffsets = true; // makes noise static, but more noticeable if disabled.
+global.irr_usetemporalfilter = false;
+global.irr_usegaussianfilter = false;
+global.irr_usesmartdenoisefilter = false;
+global.irr_temporalfactor = 0.5; // 0.0 (no filtering) to 0.99 (max filtering, lots of smearing), 0.5 being the best neutral option.
+```
+
+Global irradiance provides 3 helper functions for occluders, emitters and refraction: draw_sprite_occluder / emitter / refraction and draw_surface_occluder / emitter / refraction. The test object provides three surfaces that you must draw your scene to using the functions above: gameworld_occluders, gameworld_worldscene and gameworld_refraction.
 
 1. `gameworld_occluders` must contain all occluders in your scene. Draw your occluders in BLACK so that they only cast shadows, draw them in COLOR/WHITE if you want them to be visible.
 2. `gameworld_worldscene` must have the previous surface drawn in BLACK (removing all color) and then have all emitters drawn to it.

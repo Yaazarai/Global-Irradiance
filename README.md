@@ -1,8 +1,9 @@
 # Global-Irradiance
 A better method for 2D based global illumination. Built with GameMaker Studio 2 (v2023.6.0.92).
 
-![Sample](https://i.imgur.com/0Mw16jG.gif)
-
+<p align="center">
+  <img src="https://github.com/Yaazarai/Global-Irradiance/assets/7478702/5169b042-0485-4008-9061-cab933e1ab74" />
+</p>
 ----
 
 ## PART ONE: REWORKING NOISE

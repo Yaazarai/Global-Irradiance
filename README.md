@@ -34,25 +34,35 @@ Global irradiance provides 3 helper functions for occluders, emitters and refrac
 
 In the provided test object the scene is all drawn in the `Draw Begin` event. Here is that example:
 ```GML
-surface_set_target(gameworld_occluders);
-draw_clear_alpha(c_black, 0);
-	draw_sprite_occluder(Spr_WallScene, 0, 0, 0, 1, 1, 0);
-	draw_sprite_occluder(Spr_Occluder, 0, mouse_x, mouse_y, 1, 1, global.irr_frametime / 30.0);
-surface_reset_target();
+    surface_set_target(gameworld_occluders);
+    draw_clear_alpha(c_black, 0);
+        // Draw the sprite containing our static black walls.
+        draw_sprite_occluder(Spr_WallScene, 0, 0, 0, 1, 1, 0);
 
+        // Draw the sprite containing our occluders we want to be visible (non-black).
+        draw_sprite_occluder(Spr_Occluder, 0, mouse_x, mouse_y, 1, 1, global.irr_frametime / 30.0);
+    surface_reset_target();
 
-surface_set_target(gameworld_worldscene);
-draw_clear_alpha(c_black, 0);
-	draw_surface_emitter(gameworld_occluders, 0, 0, 1, 1, 0, c_black); // Brightness is taken from the color of the emnitter, brighter colors have brighter light.
-	draw_sprite_emitter(Spr_EmitterScene, 0, 0, 0, 1, 1, 0, c_white); // Brightness is taken from the color of the emnitter, brighter colors have brighter light.
-surface_reset_target();
+    surface_set_target(gameworld_worldscene);
+    draw_clear_alpha(c_black, 0);
+        // Re-Draw the occluder surface as a black emitter, e.g. zero light emission for walls.
+        draw_surface_emitter(gameworld_occluders, 0, 0, 1, 1, 0, c_black);
 
-surface_set_target(gameworld_refraction);
-draw_clear_alpha(c_black, 0);
-	draw_ambient_refraction(1.0);
-	draw_sprite_refraction(0.0 /*visibility*/, 0.0 /*occlusion*/, Spr_WallScene, 0, 0, 0, 1, 1, 0);
-	draw_sprite_refraction(1.0 /*visibility*/, 0.0 /*occlusion*/, Spr_Occluder, 0, mouse_x, mouse_y, 1, 1, global.irr_frametime / 30.0);
-surface_reset_target();
+        // Brightness is taken from the color of the emnitter, brighter colors have brighter light. Draw the colored emitter sprites.
+        draw_sprite_emitter(Spr_EmitterScene, 0, 0, 0, 1, 1, 0, c_white);
+    surface_reset_target();
+
+    surface_set_target(gameworld_refraction);
+    draw_clear_alpha(c_black, 0);
+        // Set the ambient refraction level, 1.0 being maximum for empty space.
+        draw_ambient_refraction(1.0);
+
+        // Re-Draw our Occluders surface with zero visibility and max occlusion (strong shadows).
+        draw_surface_refraction(0.0 /*visibility*/, 0.0 /*occlusion*/, gameworld_occluders, 0, 0, 0, 1, 1, 0);
+
+        // Re-Draw our visible occluders with their respective refraction property.
+        draw_sprite_refraction(1.0 /*visibility*/, 0.0 /*occlusion*/, Spr_Occluder, 0, mouse_x, mouse_y, 1, 1, global.irr_frametime / 30.0);
+    surface_reset_target();
 ```
 
 ----

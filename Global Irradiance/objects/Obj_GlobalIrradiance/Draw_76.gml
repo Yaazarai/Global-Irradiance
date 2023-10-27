@@ -1,0 +1,12 @@
+if (!surface_exists(gameworld_worldscene)) gameworld_worldscene = surface_create(global.irr_resolution,global.irr_resolution);
+if (!surface_exists(gameworld_occluders)) gameworld_occluders = surface_create(global.irr_resolution,global.irr_resolution);
+if (!surface_exists(gameworld_refraction)) gameworld_refraction = surface_create(global.irr_resolution,global.irr_resolution);
+if (!surface_exists(gameworld_transfer)) gameworld_transfer = surface_create(global.irr_resolution,global.irr_resolution);
+if (!surface_exists(gameworld_jumpflood)) gameworld_jumpflood = surface_create(global.irr_resolution,global.irr_resolution);
+if (!surface_exists(gameworld_worldsceneSDF)) gameworld_worldsceneSDF = surface_create(global.irr_resolution,global.irr_resolution);
+if (!surface_exists(gameworld_occluderSDF)) gameworld_occluderSDF = surface_create(global.irr_resolution,global.irr_resolution);
+if (!surface_exists(gameworld_combinedSDF)) gameworld_combinedSDF = surface_create(global.irr_resolution,global.irr_resolution);
+if (!surface_exists(gameworld_radialbluenoise)) gameworld_radialbluenoise =  surface_create(global.irr_resolution,global.irr_resolution);
+if (!surface_exists(gameworld_irradiance[0])) gameworld_irradiance[0] =  surface_create(global.irr_resolution,global.irr_resolution);
+if (!surface_exists(gameworld_irradiance[1])) gameworld_irradiance[1] =  surface_create(global.irr_resolution,global.irr_resolution);
+if (!surface_exists(gameworld_postprocessfilter)) gameworld_postprocessfilter =  surface_create(global.irr_resolution,global.irr_resolution);

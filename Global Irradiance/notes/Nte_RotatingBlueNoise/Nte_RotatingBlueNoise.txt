@@ -1,0 +1,20 @@
+Rotating Blue Noise:
+	Takes an input blue-noise texture/sprite and converts each pixel
+	to radians by multiplying the noise pixel brightness by 2PI.
+	
+	Then adds a time offset converted to radians is seeded into the
+	radial noise and finally converted back to normal space by diving
+	by 2PI.
+	
+Why this method over Golden-Ratio Seeding?
+	Using the Golden Ratio is proven to overall equalize and reduce
+	noise throughout a scene, however this is not ideal for 2D application.
+	
+	When sampling frame-by-frame each lighting render leaves noise seeded
+	throughout the scene due to using a low-ray count. Since we know this we
+	can exploit the uniformity property of blue-noise by offseting the noise
+	radially to fill in the noise gaps left by the previous light scene.
+	
+	This works because every pixel is offset by the same amount, perfectly
+	preserving the blue-noise when converting to-and-from polar coordinate
+	space (radians).

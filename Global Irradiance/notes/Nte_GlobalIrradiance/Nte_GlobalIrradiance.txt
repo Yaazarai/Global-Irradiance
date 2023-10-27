@@ -1,0 +1,29 @@
+Global Irradiance:
+	New method of 2D radiosity that vastly increases performance, visual
+	fidelity and adds a new feature: refraction tracking.
+	
+	Refraction Tracking works by adding 2 grayscale versions of your light
+	scene to the render pipeline. When the irradiance shader starts the
+	raymarch it checks the current pixels interior refraction value--how
+	much this pixel is willing to accumulate light data.
+	
+	Then as the raymarch is performed the refraction value across the
+	raymarch is sampled and if that value differs from the current refraction
+	value we take the minimum (lower) of the two refraction values. This way
+	as a ray marches through the scene the refraction value will decrease as
+	it passes through several surfaces.
+	
+	However in order for this to work, all occluders with non-zero refraction
+	values--called visual occluders--must have their own SDF rendered and
+	combined with the game scene's SDF. This is done by rendering all of the
+	occluders to a separate surface, inverting the surface so that empty space
+	becomes visible and occluder pixels become invisible. This allows us the
+	SDF the interior surface of visible occluder objects making them visible
+	in the final output light scene.
+	
+Methodologies Used:
+	1. Rotating Blue Noise.
+	2. Uniform Sparse Density Resampling.
+	3. Per-Ray Surface Refraction Tracking.
+	4. 2D Radiosity w/ Edge Sampling.
+	5. Temporal Filtering.

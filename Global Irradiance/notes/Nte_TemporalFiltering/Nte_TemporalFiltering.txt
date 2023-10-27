@@ -1,0 +1,6 @@
+Temporal Filtering:
+	You take the current frame light surface A and blend that with
+	the previous frame light surface B to filter out noise over-time.
+	
+	PRO: Will significantly filter out noise (but not entirely) frame-by-frame.
+	CON: Leaves a smearing/motion blur effect that could be hard on the eyes.

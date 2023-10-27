@@ -1,0 +1,12 @@
+if (surface_exists(gameworld_worldscene)) surface_free(gameworld_worldscene);
+if (surface_exists(gameworld_occluders)) surface_free(gameworld_occluders);
+if (surface_exists(gameworld_refraction)) surface_free(gameworld_refraction);
+if (surface_exists(gameworld_transfer)) surface_free(gameworld_transfer);
+if (surface_exists(gameworld_jumpflood)) surface_free(gameworld_jumpflood);
+if (surface_exists(gameworld_worldsceneSDF)) surface_free(gameworld_worldsceneSDF);
+if (surface_exists(gameworld_occluderSDF)) surface_free(gameworld_occluderSDF);
+if (surface_exists(gameworld_combinedSDF)) surface_free(gameworld_combinedSDF);
+if (surface_exists(gameworld_radialbluenoise)) surface_free(gameworld_radialbluenoise);
+if (surface_exists(gameworld_irradiance[0])) surface_free(gameworld_irradiance[0]);
+if (surface_exists(gameworld_irradiance[1])) surface_free(gameworld_irradiance[1]);
+if (surface_exists(gameworld_postprocessfilter)) surface_free(gameworld_postprocessfilter);
